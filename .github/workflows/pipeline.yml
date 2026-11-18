@@ -1,4 +1,4 @@
-name: Portfolio Pipeline
+name: TA Pipeline
 
 on:
   push:
