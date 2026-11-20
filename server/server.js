@@ -1,15 +1,39 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const prisma = require('./config/prisma');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+const officeHoursRoutes = require('./routes/officeHoursRoutes');
+app.use('/api/office-hours', officeHoursRoutes);
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'TA Finder Backend Skeleton is running!' });
 });
+
+//Database check endpoint
+app.get('/api/test-db', async (req, res) => {
+    try {
+        const users = await prisma.user.findMany();
+
+        res.status(200).json({
+            message: 'Database connection successful!',
+            users: users
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: 'Database connection failed'
+        });
+    }
+});
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
