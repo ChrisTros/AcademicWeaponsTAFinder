@@ -29,6 +29,7 @@ async function main() {
     console.log('Sample TA:', ta);
     console.log('Sample course:', course);
 
+    //Create sample office-hour connect to TA and course
     const officeHour = await prisma.officeHour.create({
     data: {
         day: "Monday",
@@ -45,6 +46,7 @@ console.log('Sample office hour:', officeHour);
 
 }
 
+//Seed script
 main()
     .catch((error) => {
         console.error(error);

@@ -2,25 +2,9 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../config/prisma');
 
-const officeHours = [
-    {
-        id: 1,
-        taName: "John Cena",
-        course: "CS 1501",
-        day: "Monday",
-        startTime: "14:00",
-        endTime: "16:00"
-    },
-    {
-        id: 2,
-        taName: "John Doe",
-        course: "CS 1502",
-        day: "Tuesday",
-        startTime: "12:00",
-        endTime: "14:00"
-    }
-];
+const {getOfficeHours} = require('../controllers/officeHoursController');
 
+// GET /api/office-hourse
 router.get('/', async (req, res) => {
     try {
         const officeHours = await prisma.officeHour.findMany({
@@ -41,6 +25,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+//POST /api/office-hours
+//Makes a new office-hour record in db
 router.post('/', async (req, res) => {
     try {
         const {
@@ -61,6 +47,7 @@ router.post('/', async (req, res) => {
             });
         }
 
+        //Put new office-hour into db
         const newOfficeHour = await prisma.officeHour.create({
             data: {
                 day,
@@ -71,7 +58,8 @@ router.post('/', async (req, res) => {
                 courseId
             }
         });
-
+        
+        //return new office-hour
         res.status(201).json(newOfficeHour);
 
     } catch (error) {
@@ -83,4 +71,5 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Export to server.js
 module.exports = router;

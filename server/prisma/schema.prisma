@@ -12,6 +12,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//Stores info about TAs and students
 model User {
   id                Int                @id @default(autoincrement())
   name              String
@@ -21,13 +22,17 @@ model User {
   attendanceIntents AttendanceIntent[]
 }
 
+//Stores course info
 model Course {
   id          Int          @id @default(autoincrement())
   courseCode  String       @unique
   courseName  String
+
+  //office hours assaciated with course
   officeHours OfficeHour[]
 }
 
+// Stores ta offce-hour times and places
 model OfficeHour {
   id                Int                @id @default(autoincrement())
   day               String
@@ -35,15 +40,19 @@ model OfficeHour {
   endTime           String
   location          String
 
+// Connect with TA holding office hours
   taId              Int
   ta                User               @relation(fields: [taId], references: [id])
 
+//Connect with university course
   courseId          Int
   course            Course             @relation(fields: [courseId], references: [id])
 
+// students intent to attend
   attendanceIntents AttendanceIntent[]
 }
 
+// Tracks attedence for metrics
 model AttendanceIntent {
   id           Int        @id @default(autoincrement())
 
@@ -53,5 +62,6 @@ model AttendanceIntent {
   officeHourId Int
   officeHour   OfficeHour @relation(fields: [officeHourId], references: [id])
 
+// No double sign up
   @@unique([studentId, officeHourId])
 }
