@@ -145,8 +145,10 @@ export default function DashboardPage() {
                                     style={{
                                         padding: "8px 12px",
                                         borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        backgroundColor: "#fff",
+                                        border: "1.5px solid #111827",
+                                        backgroundColor: "#f9fafb",
+                                        color: "#111827",
+                                        fontWeight: "bold",
                                         cursor: "pointer",
                                     }}
                                 >
