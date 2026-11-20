@@ -12,9 +12,6 @@ app.use(cors());
 const officeHoursRoutes = require('./routes/officeHoursRoutes');
 app.use('/api/office-hours', officeHoursRoutes);
 
-const attendanceIntentRoutes = require('./routes/attendanceIntentRoutes');
-app.use('/api/attendance-intents',  attendanceIntentRoutes);
-
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'TA Finder Backend Skeleton is running!' });
